@@ -82,7 +82,12 @@ réalisateur.
 
 ### Afficher la liste des films pour un acteur actrice donné
 
-
+    SELECT movie.title, movie.release_year, perform.role
+    FROM actor
+    JOIN perform ON actor.id = perform.actor_id
+    JOIN movie ON perform.movie_id = movie.id
+    WHERE firstname = 'Brad'
+    AND lastname = 'Pitt';
 
 ### Ajouter un film
 
