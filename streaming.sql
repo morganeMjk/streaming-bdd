@@ -16,7 +16,7 @@ CREATE TABLE streaming_user (
 );
 
 
--- Création de la table Director
+-- Création de la table director
 CREATE TABLE director (
     id INT PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(190) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE director (
 );
 
 
--- Création de la table Movie
+-- Création de la table movie
 CREATE TABLE movie (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(190) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE movie (
 );
 
 
--- Création de la table Favorite
+-- Création de la table favorite
 CREATE TABLE favorite (
     streaming_user_id INT NOT NULL,
     movie_id INT NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE favorite (
 );
 
 
--- Création de la table Actor
+-- Création de la table actor
 CREATE TABLE actor (
     id INT PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(190) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE actor (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Création de la table Favorite
+-- Création de la table perform
 CREATE TABLE perform (
     movie_id INT NOT NULL,
     actor_id INT NOT NULL,
