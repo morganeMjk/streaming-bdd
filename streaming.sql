@@ -65,7 +65,7 @@ CREATE TABLE perform (
     FOREIGN KEY (movie_id) REFERENCES movie(id),
     FOREIGN KEY (actor_id) REFERENCES actor(id),
     role VARCHAR(190) NOT NULL,
-    is_lead_role BOOLEAN NOT NULL,
+    is_lead_role SET('oui', 'non') NOT NULL DEFAULT 'non',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
