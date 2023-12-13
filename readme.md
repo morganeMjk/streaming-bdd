@@ -91,6 +91,8 @@ réalisateur.
 
 ### Ajouter un film
 
+    INSERT INTO movie (title, duration, release_year) VALUES ('Les Goonies', '02:47:00', 1985);
+
 ### Ajouter un acteur/actrice
 
 ### Modifier un film
