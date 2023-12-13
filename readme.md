@@ -67,9 +67,11 @@ réalisateur.
 
 ### Afficher les noms, prénoms et âges des acteurs/actrices de plus de 30 ans dans l'ordre alphabétique (prénom d'abord, puis nom)
 
+    SELECT firstname, lastname birthdate,
+    TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age
+    FROM actor;
+
 ### Afficher la liste des acteurs/actrices principaux pour un film donné
-
-
 
 ### Afficher la liste des films pour un acteur actrice donné
 
