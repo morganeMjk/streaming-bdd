@@ -109,3 +109,8 @@ réalisateur.
     WHERE title = 'Little Women';
 
 ### Afficher les 3 derniers acteurs/actrices ajouté(e)s
+
+    SELECT *
+    FROM actor
+    ORDER BY created_at DESC
+    LIMIT 3;
