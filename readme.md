@@ -99,6 +99,10 @@ réalisateur.
 
 ### Modifier un film
 
+    UPDATE movie
+    SET release_year = 2023
+    WHERE title = 'Les Goonies';
+
 ### Supprimer un acteur/actrice
 
 ### Afficher les 3 derniers acteurs/actrices ajouté(e)s
