@@ -41,8 +41,8 @@ CREATE TABLE movie (
 CREATE TABLE favorite (
     streaming_user_id INT NOT NULL,
     movie_id INT NOT NULL,
-    FOREIGN KEY (streaming_user_id) REFERENCES streaming_user(id),
-    FOREIGN KEY (movie_id) REFERENCES movie(id),
+    FOREIGN KEY (streaming_user_id) REFERENCES streaming_user(id) ON DELETE CASCADE,
+    FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -62,8 +62,8 @@ CREATE TABLE actor (
 CREATE TABLE perform (
     movie_id INT NOT NULL,
     actor_id INT NOT NULL,
-    FOREIGN KEY (movie_id) REFERENCES movie(id),
-    FOREIGN KEY (actor_id) REFERENCES actor(id),
+    FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE,
+    FOREIGN KEY (actor_id) REFERENCES actor(id) ON DELETE CASCADE,
     role VARCHAR(190) NOT NULL,
     is_lead_role SET('oui', 'non') NOT NULL DEFAULT 'non',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

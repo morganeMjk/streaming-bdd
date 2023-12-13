@@ -105,4 +105,7 @@ réalisateur.
 
 ### Supprimer un acteur/actrice
 
+    DELETE FROM movie
+    WHERE title = 'Little Women';
+
 ### Afficher les 3 derniers acteurs/actrices ajouté(e)s
