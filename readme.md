@@ -73,7 +73,16 @@ réalisateur.
 
 ### Afficher la liste des acteurs/actrices principaux pour un film donné
 
+    SELECT actor.firstname, actor.lastname, perform.role
+    FROM movie
+    JOIN perform ON movie.id = perform.movie_id
+    JOIN actor ON perform.actor_id = actor.id
+    WHERE title = 'Inception'
+    AND is_lead_role = 'oui';
+
 ### Afficher la liste des films pour un acteur actrice donné
+
+
 
 ### Ajouter un film
 
