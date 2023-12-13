@@ -95,6 +95,8 @@ réalisateur.
 
 ### Ajouter un acteur/actrice
 
+    INSERT INTO actor (firstname, lastname, birthdate) VALUES ('Bradley', 'Cooper', '1975-01-05');
+
 ### Modifier un film
 
 ### Supprimer un acteur/actrice
