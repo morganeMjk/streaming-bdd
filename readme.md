@@ -6,7 +6,7 @@ Ce projet comprend un modèle physique des données (MPD) basé sur la méthode 
 
 ## Mise en place du projet
 
-### Installations
+### Installation
 
 En suivant ce lien, téléchargez XAMPP https://www.apachefriends.org/fr/index.html
 
