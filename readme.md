@@ -146,7 +146,7 @@ La base de données comprend les tables suivantes :
 
 ### Afficher le réalisateur ayant le plus de film mis en favoris et combien de ses films ont été mis en favoris.
 
-    SELECT director.id AS director_id, director.firstname, director.lastname,
+    SELECT director.id AS, director.firstname, director.lastname,
     COUNT(favorite.movie_id) AS favorite_count
     FROM director
     JOIN movie ON director.id = movie.id
