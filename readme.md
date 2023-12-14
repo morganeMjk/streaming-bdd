@@ -67,7 +67,7 @@ réalisateur.
 
 ### Afficher les noms prénoms et âges des acteurs/actrices de plus de 30 ans dans l'ordre alphabétique (prénom d'abord, puis nom)
 
-    SELECT firstname, lastname birthdate,
+    SELECT firstname, lastname, birthdate,
     TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age
     FROM actor;
 
@@ -114,3 +114,37 @@ réalisateur.
     FROM actor
     ORDER BY created_at DESC
     LIMIT 3;
+
+### Afficher la moyenne du nombre de films des acteurs/trices de plus de 50 ans
+
+    SELECT AVG(movie_count) AS average_movies
+    FROM (
+        SELECT actor_id, COUNT(DISTINCT movie_id) AS movie_count
+        FROM actor
+        JOIN perform ON actor.id = perform.actor_id
+        JOIN movie ON perform.movie_id = movie.id
+        WHERE TIMESTAMPDIFF(YEAR, actor.birthdate, CURDATE()) > 50
+        GROUP BY actor_id
+    ) AS actor_movie_counts;
+
+### Afficher le réalisateur ayant le plus de film mis en favoris et combien de ses films ont été mis en favoris.
+
+    SELECT director.id AS director_id, director.firstname, director.lastname,
+    COUNT(favorite.movie_id) AS favorite_count
+    FROM director
+    JOIN movie ON director.id = movie.id
+    JOIN favorite ON movie.id = favorite.movie_id
+    GROUP BY director.id
+    ORDER BY favorite_count DESC
+    LIMIT 1;
+
+### Afficher les films qui ont plus d'acteurs que la moyenne des acteurs par film.
+
+    SELECT movie.id AS movie_id, movie.title, COUNT(perform.actor_id) AS actor_count
+    FROM movie
+    JOIN perform ON movie.id = perform.movie_id
+    GROUP BY movie.id, movie.title
+    HAVING actor_count > (SELECT AVG(actor_count_per_movie) FROM (SELECT movie.id, COUNT(perform.actor_id) AS actor_count_per_movie FROM movie JOIN perform ON movie.id = perform.movie_id GROUP BY movie.id) AS avg_actor_count_subquery);
+
+### Écrivez un script de transaction qui ajoute un nouveau film, puis l'ajoute aux films favoris d'un utilisateur spécifique, en s'assurant que les deux opérations réussissent ou échouent ensemble. (Astuce : Utilisez BEGIN TRANSACTION, COMMIT, et ROLLBACK)
+

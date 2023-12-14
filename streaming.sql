@@ -9,8 +9,8 @@ USE streaming;
 -- Création de la table streaming_user
 CREATE TABLE streaming_user (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(190) NOT NULL UNIQUE,
-    password VARCHAR(190) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -19,8 +19,8 @@ CREATE TABLE streaming_user (
 -- Création de la table director
 CREATE TABLE director (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    firstname VARCHAR(190) NOT NULL,
-    lastname VARCHAR(190) NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -29,7 +29,7 @@ CREATE TABLE director (
 -- Création de la table movie
 CREATE TABLE movie (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(190) NOT NULL,
+    title VARCHAR(255) NOT NULL,
     duration TIME NOT NULL,
     release_year INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -51,8 +51,8 @@ CREATE TABLE favorite (
 -- Création de la table actor
 CREATE TABLE actor (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    firstname VARCHAR(190) NOT NULL,
-    lastname VARCHAR(190) NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
     birthdate DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -64,7 +64,7 @@ CREATE TABLE perform (
     actor_id INT NOT NULL,
     FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE,
     FOREIGN KEY (actor_id) REFERENCES actor(id) ON DELETE CASCADE,
-    role VARCHAR(190) NOT NULL,
+    role VARCHAR(50) NOT NULL,
     is_lead_role SET('oui', 'non') NOT NULL DEFAULT 'non',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
