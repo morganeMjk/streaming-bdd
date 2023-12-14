@@ -1,6 +1,7 @@
 # README
 
 ## Description du Projet
+
 Ce projet comprend un modèle physique des données (MPD) basé sur la méthode Merise, ainsi qu'un fichier SQL nommé streaming.sql. Le script SQL crée et alimente une base de données appelée streaming avec plusieurs tables telles que streaming_user, director, movie, favorite, actor, et perform.
 
 ## Mise en place du projet
@@ -9,17 +10,18 @@ Ce projet comprend un modèle physique des données (MPD) basé sur la méthode 
 
 En suivant ce lien, téléchargez XAMPP https://www.apachefriends.org/fr/index.html
 
-Une fois le telechargement terminé, ouvrez le Control Panel et lancer l'exécution de Apache et de MySQL (start).
+Une fois le telechargement terminé, ouvrez le Control Panel et lancez l'exécution de Apache et de MySQL (start).
 
 Pour accéder à PhpMyAdmin, cliquez sur le bouton Admin de MySQL.
 
 ### Création de la base de données et injection des données
 
-Dans l'onglet SQL, coller le contenu du fichier streaming.sql et executez le script (pensez à actualiser la page une fois le script exécuté).
+Dans l'onglet SQL, collez le contenu du fichier streaming.sql et executez le script (pensez à actualiser la page une fois le script exécuté).
 
-Pour effectuer des requêtes, selectionnez la base de données streaming, et dans l'onglet SQL exécutez vos requêtes.
+Pour effectuer des requêtes, selectionnez la base de données streaming et dans l'onglet SQL exécutez vos requêtes.
 
 ## Structure de la Base de Données
+
 La base de données comprend les tables suivantes :
 
 ### streaming_user
