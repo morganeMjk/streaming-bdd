@@ -165,3 +165,22 @@ La base de données comprend les tables suivantes :
 
 ### Écrivez un script de transaction qui ajoute un nouveau film, puis l'ajoute aux films favoris d'un utilisateur spécifique, en s'assurant que les deux opérations réussissent ou échouent ensemble. (Astuce : Utilisez BEGIN TRANSACTION, COMMIT, et ROLLBACK)
 
+    -- Début de la transaction
+    START TRANSACTION;
+
+    -- Ajout d'un nouveau film
+    INSERT INTO movie (title, duration, release_year) VALUES
+        ('New Movie', '02:00:00', 2023);
+
+    -- Récupération de l'ID du dernier film ajouté
+    SET @newMovieId = LAST_INSERT_ID();
+
+    -- Ajout du nouveau film aux favoris d'un utilisateur spécifique (par exemple, utilisateur avec l'ID 1)
+    INSERT INTO favorite (streaming_user_id, movie_id) VALUES
+        (1, @newMovieId);
+
+    -- Si toutes les opérations ci-dessus réussissent, valider la transaction
+    COMMIT;
+
+    -- Si une erreur se produit, annuler la transaction
+    -- ROLLBACK;
