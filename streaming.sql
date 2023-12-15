@@ -32,6 +32,8 @@ CREATE TABLE movie (
     title VARCHAR(255) NOT NULL,
     duration TIME NOT NULL,
     release_year INT NOT NULL,
+    director_id INT NOT NULL,
+    FOREIGN KEY (director_id) REFERENCES director(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -44,7 +46,8 @@ CREATE TABLE favorite (
     FOREIGN KEY (streaming_user_id) REFERENCES streaming_user(id) ON DELETE CASCADE,
     FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(streaming_user_id, movie_id)
 );
 
 
@@ -67,7 +70,8 @@ CREATE TABLE perform (
     role VARCHAR(50) NOT NULL,
     is_lead_role SET('oui', 'non') NOT NULL DEFAULT 'non',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(movie_id, actor_id)
 );
 
 -- Ajout de données dans la table streaming_user
@@ -87,25 +91,25 @@ INSERT INTO director (firstname, lastname) VALUES
     ('Quentin', 'Tarantino');
 
 -- Ajout de données dans la table movie
-INSERT INTO movie (title, duration, release_year) VALUES
-    ('Inception', '02:30:00', 2010),
-    ('Little Women', '02:15:00', 2019),
-    ('Pulp Fiction', '02:34:00', 1994),
-    ('The Dark Knight', '02:32:00', 2008),
-    ('La La Land', '02:08:00', 2016),
-    ('Django Unchained', '02:45:00', 2012),
-    ('Interstellar', '02:49:00', 2014),
-    ('Once Upon a Time in Hollywood', '02:41:00', 2019),
-    ('Memento', '01:53:00', 2000),
-    ('Lady Bird', '01:34:00', 2017),
-    ('Kill Bill: Volume 1', '01:51:00', 2003),
-    ('Kill Bill: Volume 2', '02:17:00', 2004),
-    ('The Prestige', '02:10:00', 2006),
-    ('Reservoir Dogs', '01:39:00', 1992),
-    ('Tenet', '02:30:00', 2020),
-    ('Once Upon a Time in the West', '02:45:00', 1968),
-    ('Dunkirk', '01:46:00', 2017),
-    ('The Hateful Eight', '03:07:00', 2015);
+INSERT INTO movie (title, duration, release_year, director_id) VALUES
+    ('Inception', '02:30:00', 2010, 1),
+    ('Little Women', '02:15:00', 2019, 2),
+    ('Pulp Fiction', '02:34:00', 1994, 3),
+    ('The Dark Knight', '02:32:00', 2008, 1),
+    ('La La Land', '02:08:00', 2016, 2),
+    ('Django Unchained', '02:45:00', 2012, 3),
+    ('Interstellar', '02:49:00', 2014, 1),
+    ('Once Upon a Time in Hollywood', '02:41:00', 2019, 3),
+    ('Memento', '01:53:00', 2000, 1),
+    ('Lady Bird', '01:34:00', 2017, 2),
+    ('Kill Bill: Volume 1', '01:51:00', 2003, 3),
+    ('Kill Bill: Volume 2', '02:17:00', 2004, 3),
+    ('The Prestige', '02:10:00', 2006, 1),
+    ('Reservoir Dogs', '01:39:00', 1992, 3),
+    ('Tenet', '02:30:00', 2020, 1),
+    ('Once Upon a Time in the West', '02:45:00', 1968, 3),
+    ('Dunkirk', '01:46:00', 2017, 1),
+    ('The Hateful Eight', '03:07:00', 2015, 3);
 
 -- Ajout de données dans la table favorite
 INSERT INTO favorite (streaming_user_id, movie_id) VALUES

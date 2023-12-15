@@ -84,9 +84,10 @@ La base de données comprend les tables suivantes :
 
 ### Afficher les noms prénoms et âges des acteurs/actrices de plus de 30 ans dans l'ordre alphabétique (prénom d'abord, puis nom)
 
-    SELECT firstname, lastname, birthdate,
-    TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age
-    FROM actor;
+    SELECT firstname, lastname, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age
+    FROM actor
+    WHERE TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) > 30
+    ORDER BY firstname, lastname;
 
 ### Afficher la liste des acteurs/actrices principaux pour un film donné
 
@@ -100,15 +101,15 @@ La base de données comprend les tables suivantes :
 ### Afficher la liste des films pour un acteur actrice donné
 
     SELECT movie.title, movie.release_year, perform.role
-    FROM actor
-    JOIN perform ON actor.id = perform.actor_id
-    JOIN movie ON perform.movie_id = movie.id
+    FROM movie
+    JOIN perform ON movie.id = perform.movie_id
+    JOIN actor ON perform.actor_id = actor.id
     WHERE firstname = 'Brad'
     AND lastname = 'Pitt';
 
 ### Ajouter un film
 
-    INSERT INTO movie (title, duration, release_year) VALUES ('Les Goonies', '02:47:00', 1985);
+    INSERT INTO movie (title, duration, release_year, director_id) VALUES ('Les Goonies', '02:47:00', 1985, 1);
 
 ### Ajouter un acteur/actrice
 
@@ -134,34 +135,34 @@ La base de données comprend les tables suivantes :
 
 ### Afficher la moyenne du nombre de films des acteurs/trices de plus de 50 ans
 
-    SELECT AVG(movie_count) AS average_movies
+    SELECT AVG(movie_count) AS moyenne_films
     FROM (
-        SELECT actor_id, COUNT(DISTINCT movie_id) AS movie_count
+        SELECT COUNT(*) AS movie_count
         FROM actor
         JOIN perform ON actor.id = perform.actor_id
         JOIN movie ON perform.movie_id = movie.id
         WHERE TIMESTAMPDIFF(YEAR, actor.birthdate, CURDATE()) > 50
-        GROUP BY actor_id
+        GROUP BY actor.id
     ) AS actor_movie_counts;
 
 ### Afficher le réalisateur ayant le plus de film mis en favoris et combien de ses films ont été mis en favoris.
 
-    SELECT director.id AS, director.firstname, director.lastname,
-    COUNT(favorite.movie_id) AS favorite_count
+    SELECT director.id AS director_id, director.firstname, director.lastname, COUNT(favorite.movie_id) AS films_favoris_count
     FROM director
-    JOIN movie ON director.id = movie.id
-    JOIN favorite ON movie.id = favorite.movie_id
+    JOIN movie ON director.id = movie.director_id
+    LEFT JOIN favorite ON movie.id = favorite.movie_id
     GROUP BY director.id
-    ORDER BY favorite_count DESC
+    ORDER BY films_favoris_count DESC
     LIMIT 1;
 
 ### Afficher les films qui ont plus d'acteurs que la moyenne des acteurs par film.
 
-    SELECT movie.id AS movie_id, movie.title, COUNT(perform.actor_id) AS actor_count
+    SELECT movie.title, COUNT(perform.actor_id) AS nombre_acteurs
     FROM movie
     JOIN perform ON movie.id = perform.movie_id
     GROUP BY movie.id, movie.title
-    HAVING actor_count > (SELECT AVG(actor_count_per_movie) FROM (SELECT movie.id, COUNT(perform.actor_id) AS actor_count_per_movie FROM movie JOIN perform ON movie.id = perform.movie_id GROUP BY movie.id) AS avg_actor_count_subquery);
+    HAVING nombre_acteurs > (SELECT AVG(nombre_acteurs_par_film) FROM (SELECT movie.id, COUNT(perform.actor_id) AS nombre_acteurs_par_film FROM movie JOIN perform ON movie.id = perform.movie_id GROUP BY movie.id) AS acteurs_par_film_moyenne);
+
 
 ### Écrivez un script de transaction qui ajoute un nouveau film, puis l'ajoute aux films favoris d'un utilisateur spécifique, en s'assurant que les deux opérations réussissent ou échouent ensemble. (Astuce : Utilisez BEGIN TRANSACTION, COMMIT, et ROLLBACK)
 
@@ -169,8 +170,8 @@ La base de données comprend les tables suivantes :
     START TRANSACTION;
 
     -- Ajout d'un nouveau film
-    INSERT INTO movie (title, duration, release_year) VALUES
-        ('New Movie', '02:00:00', 2023);
+    INSERT INTO movie (title, duration, release_year, director_id) VALUES
+        ('New Movie', '02:00:00', 2023, 2);
 
     -- Récupération de l'ID du dernier film ajouté
     SET @newMovieId = LAST_INSERT_ID();
